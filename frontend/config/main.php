@@ -7,6 +7,8 @@ $params = array_merge(
 );
 
 return [
+    'language' => 'ru',
+    'name' => 'Новостной портал',
     'id' => 'app-frontend',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
@@ -36,14 +38,14 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-        /*
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                'news' => 'site/news',
+                'news/<alias>' => 'site/news-card',
             ],
         ],
-        */
     ],
     'params' => $params,
 ];

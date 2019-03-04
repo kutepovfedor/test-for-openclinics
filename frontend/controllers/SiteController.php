@@ -12,6 +12,9 @@ use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
+use frontend\models\News;
+use frontend\models\NewsSearch;
+use yii\web\NotFoundHttpException;
 
 /**
  * Site controller
@@ -47,6 +50,28 @@ class SiteController extends Controller
                 ],
             ],
         ];
+    }
+
+    public function actionNews()
+    {
+        $searchModel = new NewsSearch();
+        $searchModel->statis = News::ST_ACTIVE;
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('news', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionNewsCard($alias)
+    {
+        if (!$model = News::findOne(['alias' => $alias]))
+            throw new NotFoundHttpException('Такой новости нет.');
+
+        return $this->render('view', [
+            'model' => $model,
+        ]);
     }
 
     /**
